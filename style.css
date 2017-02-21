@@ -1,0 +1,19 @@
+/*li #firstImage{
+  width: 300px;
+  display: inline;
+  border-color: black;
+
+}*/
+
+figure {
+  display: inline;
+}
+
+li {
+  display: inline-block;
+}
+
+img {
+  display: inline;
+  width: 300px;
+}

@@ -12,14 +12,6 @@ function ImageProducts (imageID, imageName, filePath) {
 
 }
 
-ImageProducts.prototype.getTimesClicked = function () {
-
-};
-
-ImageProducts.prototype.getTimesDisplayed = function () {
-
-};
-
 var catalogEntryOne = new ImageProducts('bag', 'C3PO Luggage Bag', 'assets/bag.jpg');
 
 var catalogEntryTwo = new ImageProducts('banana', 'Banana Slicer', 'assets/banana.jpg');
@@ -50,7 +42,7 @@ var catalogEntryFourteen = new ImageProducts('shark', 'Shark Sleeping Bag','asse
 
 var catalogEntryFifteen = new ImageProducts('sweep', 'Baby Mop Onesie','assets/sweep.png');
 
-var catalogEntrySixteen = new ImageProducts('tauntaun', 'Tauntaun Sleeping Bag','assets/tauntaun');
+var catalogEntrySixteen = new ImageProducts('tauntaun', 'Tauntaun Sleeping Bag','assets/tauntaun.jpg');
 
 var catalogEntrySeventeen = new ImageProducts('unicorn', 'Unicorn Meat','assets/unicorn.jpg');
 
@@ -94,3 +86,23 @@ function displayThreeImages () {
 };
 
 displayThreeImages();
+
+var imageHolder = document.getElementById('imageContainer');
+imageHolder.addEventListener('click', handleClick);
+
+function handleClick (event) {
+  event.preventDefault();
+  event.stopPropagation();
+
+  currentImages = [];
+  // event.target.id.remove();
+  // var el = document.getElementById(imagePlaces[i]);
+  var removingImages = document.getElementsByTagName('figure');
+  console.log(removingImages);
+  for (var i = 0; i < removingImages.length; i++) {
+    // var el = document.getElementById(imagePlaces[i]);
+    removingImages[i].remove();
+
+  }
+  // displayThreeImages();
+}
