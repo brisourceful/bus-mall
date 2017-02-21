@@ -60,8 +60,37 @@ var catalogEntryNineteen = new ImageProducts('water-can', 'Ridiculous Watering C
 
 var catalogEntryTwenty = new ImageProducts('wine-glass', 'Death Star Wine Glass', 'assets/wine-glass.jpg');
 
-for (var i = 0; i < productImages.length; i++) {
-  var el = document.getElementById('firstImage');
-  setAttribute
+var imagePlaces = ['firstImage','secondImage', 'thirdImage'];
+var currentImages = [];
 
-}
+function displayThreeImages () {
+  for (var i = 0; i < imagePlaces.length; i++) {
+    var el = document.getElementById(imagePlaces[i]);
+    var correctValue = false;
+    while (correctValue === false) {
+      var randomNumber = Math.floor(Math.random() * (productImages.length - 1));
+      var found = false;
+      for (var j = 0; j < currentImages.length; j++) {
+        if (randomNumber === currentImages[j]) {
+          found = true;
+        }
+      }
+      if (found !== true) {
+        currentImages.push(randomNumber);
+        correctValue = true;
+      }
+    }
+    var firstFigure = document.createElement('figure');
+    firstFigure.setAttribute('id', productImages[currentImages[i]].imageID);
+    var firstImage = document.createElement('img');
+    firstImage.setAttribute('src', productImages[currentImages[i]].filePath);
+    firstImage.setAttribute('alt', productImages[currentImages[i]].imageName);
+    var firstCaption = document.createElement('figcaption');
+    firstCaption.textContent = productImages[currentImages[i]].imageName;
+    firstFigure.appendChild(firstImage);
+    firstFigure.appendChild(firstCaption);
+    el.appendChild(firstFigure);
+  }
+};
+
+displayThreeImages();
