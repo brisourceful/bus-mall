@@ -28,7 +28,7 @@ var catalogEntrySeven = new ImageProducts('chair', 'Red Chair','assets/chair.jpg
 
 var catalogEntryEight = new ImageProducts('cthulhu', 'Green Creature Figurine','assets/cthulhu.jpg');
 
-var catalogEntryNine = new ImageProducts('dog-duck', 'Dog Duck Muzzel','assets/dog-duck.jpg');
+var catalogEntryNine = new ImageProducts('dog-duck', 'Dog Duck Muzzle','assets/dog-duck.jpg');
 
 var catalogEntryTen = new ImageProducts('dragon', 'Dragon Meat', 'assets/dragon.jpg');
 
@@ -56,11 +56,18 @@ var imagePlaces = ['firstImage','secondImage', 'thirdImage'];
 var currentImages = [];
 var el = document.getElementById('imageContainer');
 
-function displayThreeImages () {
-  // for (var i = 0; i < imagePlaces.length; i++) {
-  //
-  // }
+var previousImages = [];
 
+function generateImageOrder () {
+  previousImages = currentImages;
+  currentImages = [];
+  var numberOfImages = 3;
+  while (currentImages.length < numberOfImages) {
+    // var randNum = randNum () // Need to figure out random number function
+  }
+}
+
+function displayThreeImages () {
   for (var i = 0; i < imagePlaces.length; i++) {
     var correctValue = false;
     while (correctValue === false) {
