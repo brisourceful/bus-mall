@@ -57,6 +57,10 @@ var currentImages = [];
 var el = document.getElementById('imageContainer');
 
 function displayThreeImages () {
+  // for (var i = 0; i < imagePlaces.length; i++) {
+  //
+  // }
+
   for (var i = 0; i < imagePlaces.length; i++) {
     var correctValue = false;
     while (correctValue === false) {
