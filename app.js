@@ -54,10 +54,10 @@ var catalogEntryTwenty = new ImageProducts('wine-glass', 'Death Star Wine Glass'
 
 var imagePlaces = ['firstImage','secondImage', 'thirdImage'];
 var currentImages = [];
+var el = document.getElementById('imageContainer');
 
 function displayThreeImages () {
   for (var i = 0; i < imagePlaces.length; i++) {
-    var el = document.getElementById(imagePlaces[i]);
     var correctValue = false;
     while (correctValue === false) {
       var randomNumber = Math.floor(Math.random() * (productImages.length - 1));
@@ -67,7 +67,7 @@ function displayThreeImages () {
           found = true;
         }
       }
-      if (found !== true) {
+      if (found !== true){
         currentImages.push(randomNumber);
         correctValue = true;
       }
@@ -84,25 +84,14 @@ function displayThreeImages () {
     el.appendChild(firstFigure);
   }
 };
-
 displayThreeImages();
 
-var imageHolder = document.getElementById('imageContainer');
-imageHolder.addEventListener('click', handleClick);
+el.addEventListener('click', handleClick);
 
 function handleClick (event) {
   event.preventDefault();
   event.stopPropagation();
-
   currentImages = [];
-  // event.target.id.remove();
-  // var el = document.getElementById(imagePlaces[i]);
-  var removingImages = document.getElementsByTagName('figure');
-  console.log(removingImages);
-  for (var i = 0; i < removingImages.length; i++) {
-    // var el = document.getElementById(imagePlaces[i]);
-    removingImages[i].remove();
-
-  }
-  // displayThreeImages();
+  el.innerHTML = '';
+  displayThreeImages();
 }
