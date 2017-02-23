@@ -21,6 +21,7 @@ section {
 figure {
   display: inline-block;
   width: 300px;
+
   font-style: italic;
 }
 
@@ -29,3 +30,4 @@ img {
   border: solid;
   border-color: black;
   width: 300px;
+  height: 300px;
