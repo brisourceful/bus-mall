@@ -4,11 +4,6 @@ var productImages = [];
 
 var incrementClick = 0;
 
-function saveProductsToLocalStorage (allProducts){  // use productImages as that is my array that stores the images.
-  localStorage.allProducts = JSON.stringify(allProducts);  //saves to local storage and converts to strings
-  console.log('Saved to localStorage!');
-}
-
 // in chart.js: var allProducts = JSON.parse(localStorage.allProducts);
 // function allProductsClicks(products){
 // var productClicks = [];
@@ -79,6 +74,20 @@ var el = document.getElementById('imageContainer');
 
 var previousImages = [];
 
+loadProductsFromLocalStorage();
+
+function loadProductsFromLocalStorage() {
+  if (localStorage.allProducts) {
+    var parseLocalProducts = JSON.parse(localStorage.allProducts);
+    console.log(parseLocalProducts);
+  }
+}
+
+function saveProductsToLocalStorage(productImages){  // use productImages as that is my array that stores the images.
+  localStorage.allProducts = JSON.stringify(productImages);  //saves to local storage and converts to strings
+  console.log('Saved to localStorage!');
+}
+
 function generateRanNumber () {
   var genNumber = Math.floor(Math.random() * (productImages.length - 1));
   return genNumber;
@@ -118,9 +127,11 @@ displayThreeImages();
 function displayClicks() {
   var elData = document.getElementById('listData');
   var displayDataInUL = document.createElement('ul');
-  var displayDataInLI = document.createElement('li');
-  displayDataInLI.textContent = productImages.timesClicked;
-  displayDataInUL.appendChild(displayDataInLI);
+  for (var i = 0; i < productImages.length; i++) {
+    var displayDataInLI = document.createElement('li');
+    displayDataInLI.textContent = productImages[i].imageName + ': ' + productImages[i].timesClicked;
+    displayDataInUL.appendChild(displayDataInLI);
+  }
   elData.appendChild(displayDataInUL);
 }
 
@@ -133,13 +144,14 @@ function handleClick (event) {
   // console.log('hello world', event.target.dataset.indexNumber);
   productImages[event.target.dataset.indexNumber].timesClicked++;
   // console.log(productImages[event.target.dataset.indexNumber]);
-  if (incrementClick < 25) {
+  if (incrementClick < 5) {
     incrementClick++;
     currentImages = [];
     el.innerHTML = '';
     displayThreeImages();
   } else {
-     // write a separate function that I call inside this else statement that displays the number of clicks for each picture. Create new element on html page.
-
+    displayClicks();
+    saveProductsToLocalStorage(productImages);
+    el.removeEventListener('click', handleClick);
   }
 }
