@@ -144,7 +144,7 @@ function handleClick (event) {
   // console.log('hello world', event.target.dataset.indexNumber);
   productImages[event.target.dataset.indexNumber].timesClicked++;
   // console.log(productImages[event.target.dataset.indexNumber]);
-  if (incrementClick < 5) {
+  if (incrementClick < 25) {
     incrementClick++;
     currentImages = [];
     el.innerHTML = '';
