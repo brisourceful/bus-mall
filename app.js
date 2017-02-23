@@ -2,6 +2,27 @@
 
 var productImages = [];
 
+var incrementClick = 0;
+
+function saveProductsToLocalStorage (allProducts){  // use productImages as that is my array that stores the images.
+  localStorage.allProducts = JSON.stringify(allProducts);  //saves to local storage and converts to strings
+  console.log('Saved to localStorage!');
+}
+
+// in chart.js: var allProducts = JSON.parse(localStorage.allProducts);
+// function allProductsClicks(products){
+// var productClicks = [];
+//
+// for (var i = 0; i < products.length; i++) {
+//  productsClicks.push(products[i].clicks);
+// }
+// console.log('All Product CLicks: ', productClicks);
+// return productClicks
+// }
+//
+//var clickData = allProductsClicks(allProducts); // Storing the function data into a variable.
+//bar nameData = allProductsNames(allProducts);
+
 function ImageProducts (imageID, imageName, filePath) {
   this.imageID = imageID;
   this.imageName = imageName;
@@ -32,7 +53,7 @@ var catalogEntryNine = new ImageProducts('dog-duck', 'Dog Duck Muzzle','assets/d
 
 var catalogEntryTen = new ImageProducts('dragon', 'Dragon Meat', 'assets/dragon.jpg');
 
-var catalogEntryEleven = new ImageProducts('pen','Pen Utensil Covers', 'assets/pen.jpg');
+var catalogEntryEleven = new ImageProducts('pen','Utensil Pen Covers', 'assets/pen.jpg');
 
 var catalogEntryTwelve = new ImageProducts('pet-sweep', 'Pet Foot Mops','assets/pet-sweep.jpg');
 
@@ -58,36 +79,33 @@ var el = document.getElementById('imageContainer');
 
 var previousImages = [];
 
+function generateRanNumber () {
+  var genNumber = Math.floor(Math.random() * (productImages.length - 1));
+  return genNumber;
+}
+
 function generateImageOrder () {
-  previousImages = currentImages;
-  currentImages = [];
   var numberOfImages = 3;
   while (currentImages.length < numberOfImages) {
-    // var randNum = randNum () // Need to figure out random number function
+    var randNum = generateRanNumber();
+    // console.log(randNum);
+    if (currentImages.includes(randNum) === false && previousImages.includes(randNum) === false) {
+      currentImages.push(randNum);
+      console.log(randNum);
+    }
   }
+  previousImages = currentImages;
 }
 
 function displayThreeImages () {
+  generateImageOrder();
   for (var i = 0; i < imagePlaces.length; i++) {
-    var correctValue = false;
-    while (correctValue === false) {
-      var randomNumber = Math.floor(Math.random() * (productImages.length - 1));
-      var found = false;
-      for (var j = 0; j < currentImages.length; j++) {
-        if (randomNumber === currentImages[j]) {
-          found = true;
-        }
-      }
-      if (found !== true){
-        currentImages.push(randomNumber);
-        correctValue = true;
-      }
-    }
     var firstFigure = document.createElement('figure');
     firstFigure.setAttribute('id', productImages[currentImages[i]].imageID);
     var firstImage = document.createElement('img');
     firstImage.setAttribute('src', productImages[currentImages[i]].filePath);
     firstImage.setAttribute('alt', productImages[currentImages[i]].imageName);
+    firstImage.dataset.indexNumber = currentImages[i];
     var firstCaption = document.createElement('figcaption');
     firstCaption.textContent = productImages[currentImages[i]].imageName;
     firstFigure.appendChild(firstImage);
@@ -97,12 +115,31 @@ function displayThreeImages () {
 };
 displayThreeImages();
 
+function displayClicks() {
+  var elData = document.getElementById('listData');
+  var displayDataInUL = document.createElement('ul');
+  var displayDataInLI = document.createElement('li');
+  displayDataInLI.textContent = productImages.timesClicked;
+  displayDataInUL.appendChild(displayDataInLI);
+  elData.appendChild(displayDataInUL);
+}
+
 el.addEventListener('click', handleClick);
 
 function handleClick (event) {
   event.preventDefault();
   event.stopPropagation();
-  currentImages = [];
-  el.innerHTML = '';
-  displayThreeImages();
+  // console.log(event);
+  // console.log('hello world', event.target.dataset.indexNumber);
+  productImages[event.target.dataset.indexNumber].timesClicked++;
+  // console.log(productImages[event.target.dataset.indexNumber]);
+  if (incrementClick < 25) {
+    incrementClick++;
+    currentImages = [];
+    el.innerHTML = '';
+    displayThreeImages();
+  } else {
+     // write a separate function that I call inside this else statement that displays the number of clicks for each picture. Create new element on html page.
+
+  }
 }
