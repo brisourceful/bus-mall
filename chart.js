@@ -24,7 +24,7 @@ var myChart = new Chart(ctx, {
         datasets: [{
             label: '# of Clicks',
             data: clickTitle,
-            backgroundColor: 'pink',
+            backgroundColor: 'red',
         },
       {
         label: '# of Views',

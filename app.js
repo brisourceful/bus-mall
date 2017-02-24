@@ -4,22 +4,6 @@ var productImages = [];
 
 var incrementClick = 0;
 
-var timesShown = 0;
-
-// in chart.js: var allProducts = JSON.parse(localStorage.allProducts);
-// function allProductsClicks(products){
-// var productClicks = [];
-//
-// for (var i = 0; i < products.length; i++) {
-//  productsClicks.push(products[i].clicks);
-// }
-// console.log('All Product CLicks: ', productClicks);
-// return productClicks
-// }
-//
-//var clickData = allProductsClicks(allProducts); // Storing the function data into a variable.
-//bar nameData = allProductsNames(allProducts);
-
 function ImageProducts (imageID, imageName, filePath) {
   this.imageID = imageID;
   this.imageName = imageName;
@@ -101,7 +85,6 @@ function generateImageOrder () {
     // console.log(randNum);
     if (currentImages.includes(randNum) === false && previousImages.includes(randNum) === false) {
       currentImages.push(randNum);
-      timesShown++;
       console.log(randNum);
     }
   }
@@ -111,6 +94,7 @@ function generateImageOrder () {
 function displayThreeImages () {
   generateImageOrder();
   for (var i = 0; i < imagePlaces.length; i++) {
+    productImages[currentImages[i]].timesDisplayed++;
     var firstFigure = document.createElement('figure');
     firstFigure.setAttribute('id', productImages[currentImages[i]].imageID);
     var firstImage = document.createElement('img');
