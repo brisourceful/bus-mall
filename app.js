@@ -4,6 +4,8 @@ var productImages = [];
 
 var incrementClick = 0;
 
+var timesShown = 0;
+
 // in chart.js: var allProducts = JSON.parse(localStorage.allProducts);
 // function allProductsClicks(products){
 // var productClicks = [];
@@ -74,17 +76,16 @@ var el = document.getElementById('imageContainer');
 
 var previousImages = [];
 
-loadProductsFromLocalStorage();
-
 function loadProductsFromLocalStorage() {
   if (localStorage.allProducts) {
-    var parseLocalProducts = JSON.parse(localStorage.allProducts);
-    console.log(parseLocalProducts);
+    productImages = JSON.parse(localStorage.allProducts);
   }
 }
 
-function saveProductsToLocalStorage(productImages){  // use productImages as that is my array that stores the images.
-  localStorage.allProducts = JSON.stringify(productImages);  //saves to local storage and converts to strings
+loadProductsFromLocalStorage();
+
+function saveProductsToLocalStorage(products){  // use productImages as that is my array that stores the images.
+  localStorage.allProducts = JSON.stringify(products);  //saves to local storage and converts to strings
   console.log('Saved to localStorage!');
 }
 
@@ -100,6 +101,7 @@ function generateImageOrder () {
     // console.log(randNum);
     if (currentImages.includes(randNum) === false && previousImages.includes(randNum) === false) {
       currentImages.push(randNum);
+      timesShown++;
       console.log(randNum);
     }
   }
