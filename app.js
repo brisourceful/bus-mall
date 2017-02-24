@@ -4,25 +4,6 @@ var productImages = [];
 
 var incrementClick = 0;
 
-function saveProductsToLocalStorage (allProducts){  // use productImages as that is my array that stores the images.
-  localStorage.allProducts = JSON.stringify(allProducts);  //saves to local storage and converts to strings
-  console.log('Saved to localStorage!');
-}
-
-// in chart.js: var allProducts = JSON.parse(localStorage.allProducts);
-// function allProductsClicks(products){
-// var productClicks = [];
-//
-// for (var i = 0; i < products.length; i++) {
-//  productsClicks.push(products[i].clicks);
-// }
-// console.log('All Product CLicks: ', productClicks);
-// return productClicks
-// }
-//
-//var clickData = allProductsClicks(allProducts); // Storing the function data into a variable.
-//bar nameData = allProductsNames(allProducts);
-
 function ImageProducts (imageID, imageName, filePath) {
   this.imageID = imageID;
   this.imageName = imageName;
@@ -79,6 +60,19 @@ var el = document.getElementById('imageContainer');
 
 var previousImages = [];
 
+function loadProductsFromLocalStorage() {
+  if (localStorage.allProducts) {
+    productImages = JSON.parse(localStorage.allProducts);
+  }
+}
+
+loadProductsFromLocalStorage();
+
+function saveProductsToLocalStorage(products){  // use productImages as that is my array that stores the images.
+  localStorage.allProducts = JSON.stringify(products);  //saves to local storage and converts to strings
+  console.log('Saved to localStorage!');
+}
+
 function generateRanNumber () {
   var genNumber = Math.floor(Math.random() * (productImages.length - 1));
   return genNumber;
@@ -100,6 +94,7 @@ function generateImageOrder () {
 function displayThreeImages () {
   generateImageOrder();
   for (var i = 0; i < imagePlaces.length; i++) {
+    productImages[currentImages[i]].timesDisplayed++;
     var firstFigure = document.createElement('figure');
     firstFigure.setAttribute('id', productImages[currentImages[i]].imageID);
     var firstImage = document.createElement('img');
@@ -118,9 +113,11 @@ displayThreeImages();
 function displayClicks() {
   var elData = document.getElementById('listData');
   var displayDataInUL = document.createElement('ul');
-  var displayDataInLI = document.createElement('li');
-  displayDataInLI.textContent = productImages.timesClicked;
-  displayDataInUL.appendChild(displayDataInLI);
+  for (var i = 0; i < productImages.length; i++) {
+    var displayDataInLI = document.createElement('li');
+    displayDataInLI.textContent = productImages[i].imageName + ': ' + productImages[i].timesClicked;
+    displayDataInUL.appendChild(displayDataInLI);
+  }
   elData.appendChild(displayDataInUL);
 }
 
@@ -139,7 +136,8 @@ function handleClick (event) {
     el.innerHTML = '';
     displayThreeImages();
   } else {
-     // write a separate function that I call inside this else statement that displays the number of clicks for each picture. Create new element on html page.
-
+    displayClicks();
+    saveProductsToLocalStorage(productImages);
+    el.removeEventListener('click', handleClick);
   }
 }
